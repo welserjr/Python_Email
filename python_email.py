@@ -14,10 +14,9 @@ smtpserver.ehlo()
 smtpserver.starttls()
 smtpserver.ehlo()
 smtpserver.login(user, password)
-header  = 'To:      ' + receiver + '\n'
-header += 'From:    ' + sender + '\n'
-header += 'Subject: ' + subject + '\n'
-print (header)
-msg = header + '\n' + message + ' \n\n'
-smtpserver.sendmail(sender, receiver, msg)
+msg = MIMEText(message, _charset="UTF-8")
+msg['TO'] = receiver
+msg['FROM'] = sender
+msg['Subject'] = Header(subject, "utf-8")
+smtpserver.sendmail(sender, receiver, msg.as_string())
 smtpserver.close()
